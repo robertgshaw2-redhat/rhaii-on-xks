@@ -201,11 +201,27 @@ OUTPUT_DIR=llm-d-output ./run-bench.sh
 
 - logs
 ```bash
+(APIServer pid=7) INFO 02-25 20:49:56 [loggers.py:127] Engine 000: Avg prompt throughput: 6735.6 tokens/s, Avg generation throughput: 75.0 tokens/s, Running: 4 reqs, Waiting: 0 reqs, GPU KV cache usage: 13.9%, Prefix cache hit rate: 54.2%
 ```
 
 - results
 ```bash
-
+"request_latency": {
+    "mean": 3.9748916367432794,
+    "min": 2.0749029461294413,
+    "max": 12.032803084002808,
+    "p0.1": 2.081096272104187,
+    "p1": 2.139109589313157,
+    "p5": 2.229016542690806,
+    "p10": 2.2952557446435096,
+    "p25": 2.4869498594780453,
+    "median": 3.3404055075952783,
+    "p75": 4.674160644470248,
+    "p90": 6.633666849927976,
+    "p95": 8.02951636759098,
+    "p99": 10.069368822372052,
+    "p99.9": 11.620172555086494
+  },
 ```
 
 
