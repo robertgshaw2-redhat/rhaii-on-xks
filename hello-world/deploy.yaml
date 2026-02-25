@@ -10,7 +10,7 @@ metadata:
 spec:
   replicas: 2
   model:
-    uri: pvc://gpt-oss
+    uri: pvc://gpt-oss-pvc
     name: openai/gpt-oss-120b
   router:
     scheduler:

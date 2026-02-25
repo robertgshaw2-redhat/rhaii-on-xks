@@ -32,12 +32,6 @@ opendatahub   inference-gateway   istio   10.16.4.1   True         18m
 
 ### Setup
 
-- move to the `hello-world`
-
-```bash
-cd hello-world
-```
-
 - create namespace
 ```bash
 export NAMESPACE=llm-d-rhaii
@@ -58,13 +52,13 @@ kubectl patch serviceaccount default -n $NAMESPACE \
 
 - download model to cluster
 ```bash
-kubectl apply -f gpt-oss-pvc.yaml
-kubectl apply -f download-job.yaml
+kubectl apply -f hello-world/gpt-oss-pvc.yaml
+kubectl apply -f hello-world/download-job.yaml
 ```
 
 - deploy
 ```bash
-kubectl apply -f intelligent-inference-scheduling.yaml
+kubectl apply -f hello-world/deploy.yaml
 ```
 
 ### Make Inference Request
