@@ -37,15 +37,15 @@ fi
 echo -e "\n--- Checking Gateway ---"
 
 if [ -z "$RAW_IP" ]; then
-  RAW_IP=$(kubectl get gateway "$GATEWAY_NAME" -n "${GATEWAY_NAMESPACE}" -o jsonpath='{.status.addresses[0].value}' 2>/dev/null)
-  RAW_PORT=80
+    RAW_IP=$(kubectl get gateway "$GATEWAY_NAME" -n "${GATEWAY_NAMESPACE}" -o jsonpath='{.status.addresses[0].value}' 2>/dev/null)
+    RAW_PORT=80
 
     if [ -z "$RAW_IP" ]; then
         echo -e "${RED}Gateway IP not assigned yet. Cannot run benchmark.${NC}"
         exit 1
     else
         echo -e "Gateway IP found: ${GREEN}${RAW_IP}${NC}"
-        BASE_URL="http://${RAW_IP}:${RAW_PORT}"
+        BASE_URL="http://${RAW_IP}:${RAW_PORT}/${NAMESPACE}/${MODEL}"
         echo "Target URL: $BASE_URL"
     fi
 else

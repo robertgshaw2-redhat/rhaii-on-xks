@@ -8,7 +8,7 @@ api:
 server:
   type: vllm
   model_name: "Qwen/Qwen3-32B"
-  base_url: http://10.16.4.1:80
+  base_url: http://10.16.4.1:80/llm-d-rhaii/qwen
   ignore_eos: true
 tokenizer:
   pretrained_model_name_or_path: "Qwen/Qwen3-32B"
