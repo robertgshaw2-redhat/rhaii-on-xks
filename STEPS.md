@@ -28,7 +28,9 @@ NAMESPACE     NAME                CLASS   ADDRESS     PROGRAMMED   AGE
 opendatahub   inference-gateway   istio   10.16.4.1   True         18m
 ```
 
-### Hello, World Deployment
+## Hello, World Deployment
+
+### Setup
 
 - move to the `hello-world`
 
@@ -52,6 +54,8 @@ kubectl patch serviceaccount default -n $NAMESPACE \
   -p '{"imagePullSecrets": [{"name": "redhat-pull-secret"}]}'
 ```
 
+### Download Model and Deploy
+
 - download model to cluster
 ```bash
 kubectl apply -f gpt-oss-pvc.yaml
@@ -62,6 +66,8 @@ kubectl apply -f download-job.yaml
 ```bash
 kubectl apply -f intelligent-inference-scheduling.yaml
 ```
+
+### Make Inference Request
 
 - port forward (in separate terminal)
 ```bash
