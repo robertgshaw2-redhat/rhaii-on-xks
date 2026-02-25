@@ -8,6 +8,7 @@ GATEWAY_NAME="${GATEWAY_NAME:-inference-gateway}"
 GATEWAY_NAMESPACE="${GATEWAY_NAMESPACE:-opendatahub}"
 BENCHMARK_DIR="${BENCHMARK_DIR:-./multi-turn-llm-d}"
 OUTPUT_DIR="${OUTPUT_DIR:-./multi-turn-llm-d-results}"
+MODEL="${MODEL:-qwen}"
 
 # Colors for output
 GREEN='\033[0;32m'
@@ -38,20 +39,23 @@ echo -e "\n--- Checking Gateway ---"
 if [ -z "$RAW_IP" ]; then
   RAW_IP=$(kubectl get gateway "$GATEWAY_NAME" -n "${GATEWAY_NAMESPACE}" -o jsonpath='{.status.addresses[0].value}' 2>/dev/null)
   RAW_PORT=80
-fi
 
-if [ -z "$RAW_IP" ]; then
-    echo -e "${RED}Gateway IP not assigned yet. Cannot run benchmark.${NC}"
-    exit 1
+    if [ -z "$RAW_IP" ]; then
+        echo -e "${RED}Gateway IP not assigned yet. Cannot run benchmark.${NC}"
+        exit 1
+    else
+        echo -e "Gateway IP found: ${GREEN}${RAW_IP}${NC}"
+        BASE_URL="http://${RAW_IP}:${RAW_PORT}"
+        echo "Target URL: $BASE_URL"
+    fi
 else
-    echo -e "Gateway IP found: ${GREEN}${RAW_IP}${NC}"
     BASE_URL="http://${RAW_IP}:${RAW_PORT}"
     echo "Target URL: $BASE_URL"
-
-    # Update the config.yml with the dynamic Gateway IP
-    sed "s|base_url: .*|base_url: ${BASE_URL}|" "${BENCHMARK_DIR}/config.yml" > "${BENCHMARK_DIR}/config.yml.tmp" && mv "${BENCHMARK_DIR}/config.yml.tmp" "${BENCHMARK_DIR}/config.yml"
-    echo "Updated base_url in ${BENCHMARK_DIR}/config.yml"
 fi
+
+# Update the config.yml with the dynamic Gateway IP
+sed "s|base_url: .*|base_url: ${BASE_URL}|" "${BENCHMARK_DIR}/config.yml" > "${BENCHMARK_DIR}/config.yml.tmp" && mv "${BENCHMARK_DIR}/config.yml.tmp" "${BENCHMARK_DIR}/config.yml"
+echo "Updated base_url in ${BENCHMARK_DIR}/config.yml"
 
 # ==============================================================================
 # Step 2: Prepare Benchmark Configuration

@@ -191,5 +191,61 @@ curl http://localhost:8080/llm-d-rhaii/qwen/v1/chat/completions \
   }'
 ```
 
-### Run Benchmark
+### Run llm-d Benchmark
 
+- benchmark baseline (go to `intelligent-inference-scheduling/benchmarking` directory)
+
+```bash
+OUTPUT_DIR=llm-d-output ./run-bench.sh
+```
+
+- logs
+```bash
+```
+
+- results
+```bash
+
+```
+
+
+### Run Baseline Benchmark
+
+- deploy
+```bash
+kubectl apply -f intelligent-inference-scheduling/baseline.yaml
+```
+
+- benchmark baseline (go to `intelligent-inference-scheduling/benchmarking` directory)
+```bash
+export SVC_IP="$(kubectl -n "${NAMESPACE}" get svc qwen3-32b-vllm -o jsonpath='{.spec.clusterIP}' 2>/dev/null || true)"
+export SVC_PORT="$(kubectl -n "${NAMESPACE}" get svc qwen3-32b-vllm -o jsonpath='{.spec.ports[?(@.name=="http")].port}' 2>/dev/null || true)"
+
+RAW_IP=$SVC_IP RAW_PORT=$SVC_PORT OUTPUT_DIR=baseline-output ./run-bench.sh
+```
+
+- logs:
+```bash
+(APIServer pid=1) INFO 02-25 20:25:01 [loggers.py:127] Engine 000: Avg prompt throughput: 8434.1 tokens/s, Avg generation throughput: 19.9 tokens/s, Running: 12 reqs, Waiting: 11 reqs, GPU KV cache usage: 40.7%, Prefix cache hit rate: 4.7%
+```
+
+- results:
+```bash
+"latency": {
+  "request_latency": {
+    "mean": 20.99757727551619,
+    "min": 2.95767285884358,
+    "max": 43.27342223213054,
+    "p0.1": 3.192630859974539,
+    "p1": 5.152513729878701,
+    "p5": 7.8027134836534975,
+    "p10": 10.169069463293999,
+    "p25": 13.928895238146652,
+    "median": 19.50498054549098,
+    "p75": 28.726124470005743,
+    "p90": 33.177602148195724,
+    "p95": 36.318112793040925,
+    "p99": 39.55015729173551,
+    "p99.9": 42.78112650714849
+},
+```

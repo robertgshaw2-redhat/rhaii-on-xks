@@ -5,10 +5,10 @@ metadata:
   namespace: llm-d-rhaii
   annotations:
     opendatahub.io/model-type: generative
-    openshift.io/display-name: gpt-oss
+    openshift.io/display-name: qwen
     security.opendatahub.io/enable-auth: 'false'
 spec:
-  replicas: 8
+  replicas: 16
   model:
     uri: pvc://qwen-pvc/qwen-32b
     name: Qwen/Qwen3-32B
@@ -63,13 +63,13 @@ spec:
       - name: main
         env:
           - name: VLLM_ADDITIONAL_ARGS
-            value: "--disable-uvicorn-access-log --tensor-parallel-size 2"
+            value: "--disable-uvicorn-access-log"
         resources:
           limits:
-            cpu: '16'
-            memory: 64Gi
-            nvidia.com/gpu: "2"
+            cpu: '8'
+            memory: 32Gi
+            nvidia.com/gpu: "1"
           requests:
-            cpu: '16'
-            memory: 64Gi
-            nvidia.com/gpu: "2"
+            cpu: '8'
+            memory: 32Gi
+            nvidia.com/gpu: "1"
