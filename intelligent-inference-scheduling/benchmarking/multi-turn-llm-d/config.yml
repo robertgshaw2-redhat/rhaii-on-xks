@@ -1,0 +1,28 @@
+load:
+  type: constant
+  stages:
+  - rate: 10
+    duration: 120
+api: 
+  type: completion
+server:
+  type: vllm
+  model_name: "Qwen/Qwen3-32B"
+  base_url: http://10.16.4.1:80
+  ignore_eos: true
+tokenizer:
+  pretrained_model_name_or_path: "Qwen/Qwen3-32B"
+data:
+  type: shared_prefix
+  shared_prefix:
+    num_groups: 250                 # Number of distinct prefix, Note: the number of users is num_groups * num_prompts_per_group
+    num_prompts_per_group: 5        # Number of unique questions per group (prefix)
+    system_prompt_len: 6000         # Length of the first prefix (in tokens), simulate initialization of a system prompt
+    question_len: 2000              # Length of the unique question part (in tokens)
+    output_len: 100                 # Target length for the model's generated output (in tokens)
+    enable_multi_turn_chat: false   # If enabled, the chat context will be appended for the each request.
+report:
+  request_lifecycle:
+    summary: true
+    per_stage: true
+    per_request: true
