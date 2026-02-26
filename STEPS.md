@@ -237,6 +237,10 @@ OUTPUT_DIR=llm-d-output ./run-bench.sh
 },
 ```
 
+![grafana llm-d](intelligent-inference-scheduling/benchmarking/images/llm-d.png)
+
+
+
 
 ### Run Baseline Benchmark
 
@@ -277,3 +281,5 @@ RAW_IP=$SVC_IP RAW_PORT=$SVC_PORT OUTPUT_DIR=baseline-output ./run-bench.sh
   "p99.9": 42.78112650714849
 },
 ```
+
+![grafana baseline](intelligent-inference-scheduling/benchmarking/images/baseline.png)
