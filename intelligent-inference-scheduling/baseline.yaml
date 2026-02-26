@@ -1,3 +1,27 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: qwen3-32b-vllm
+  namespace: llm-d-rhaii
+  labels:
+    app: qwen3-32b-vllm
+spec:
+  namespaceSelector:
+    matchNames:
+      - llm-d-rhaii
+  selector:
+    matchLabels:
+      app: qwen3-32b-vllm
+  podMetricsEndpoints:
+    - port: http
+      path: /metrics
+      scheme: http
+      interval: 15s
+      scrapeTimeout: 10s
+      honorLabels: true
+      containerName: vllm
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
